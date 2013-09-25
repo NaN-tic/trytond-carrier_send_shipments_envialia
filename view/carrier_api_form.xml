@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- This file is part carrier_send_shipments_envialia module for Tryton.
+The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/field[@name='company']" position="after">
+        <group col="4" colspan="4" id="envialia" states="{'invisible': Not(Equal(Eval('method'), 'envialia'))}">
+            <separator string="Envialia" colspan="4"/>
+            <label name="envialia_agency"/>
+            <field name="envialia_agency"/>
+        </group>
+    </xpath>
+</data>

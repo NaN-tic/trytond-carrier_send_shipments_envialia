@@ -5,6 +5,8 @@ from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
 
+import logging
+
 try:
     from envialia.picking import *
 except ImportError:

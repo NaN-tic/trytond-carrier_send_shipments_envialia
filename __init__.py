@@ -8,7 +8,5 @@ from .shipment import *
 def register():
     Pool.register(
         CarrierApi,
+        ShipmentOut,
         module='carrier_send_shipments_envialia', type_='model')
-    Pool.register(
-        CarrierSendShipments,
-        module='carrier_send_shipments_envialia', type_='wizard')

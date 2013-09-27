@@ -8,14 +8,15 @@ from trytond.modules.carrier_send_shipments.tools import unaccent
 
 import logging
 
-__all__ = ['CarrierSendShipments']
+__all__ = ['ShipmentOut']
 __metaclass__ = PoolMeta
 
 
-class CarrierSendShipments(Wizard):
-    'Carrier Send Shipments'
-    __name__ = "carrier.send.shipments"
+class ShipmentOut:
+    "Customer Shipment"
+    __name__ = 'stock.shipment.out'
 
+    @classmethod
     def send_envialia(self, api, shipments, service):
         '''
         Send shipments out to envialia
@@ -27,8 +28,6 @@ class CarrierSendShipments(Wizard):
         customer = api.username
         password = api.password
         debug = api.debug
-
-        Shipment = Pool().get('stock.shipment.out')
 
         with Picking(agency, customer, password, debug) as picking_api:
 
@@ -63,7 +62,7 @@ class CarrierSendShipments(Wizard):
                         'Not send shipment %s.' % (shipment.code))
                 if envialia and envialia.get('reference'):
                     reference = envialia.get('reference')
-                    Shipment.write([shipment], {
+                    self.write([shipment], {
                         'carrier_tracking_ref': reference,
                         'carrier_service': service
                         })

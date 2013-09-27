@@ -64,7 +64,8 @@ class ShipmentOut:
                     reference = envialia.get('reference')
                     self.write([shipment], {
                         'carrier_tracking_ref': reference,
-                        'carrier_service': service
+                        'carrier_service': service,
+                        'carrier_delivery': True,
                         })
                     logging.getLogger('envialia').info(
                         'Send shipment %s' % (shipment.code))

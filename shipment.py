@@ -1,8 +1,7 @@
 #This file is part carrier_send_shipments module for Tryton.
 #The COPYRIGHT file at the top level of this repository contains 
 #the full copyright notices and license terms.
-from trytond.wizard import Wizard
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import PoolMeta
 from envialia.picking import *
 from trytond.modules.carrier_send_shipments.tools import unaccent
 
@@ -13,7 +12,6 @@ __metaclass__ = PoolMeta
 
 
 class ShipmentOut:
-    "Customer Shipment"
     __name__ = 'stock.shipment.out'
 
     @classmethod

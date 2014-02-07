@@ -72,3 +72,32 @@ class ShipmentOut:
                     error = envialia.get('error')
                     logging.getLogger('envialia').error(
                         'Not send shipment %s. %s' % (shipment.code, error))
+
+    @classmethod
+    def print_labels_envialia(cls, shipments, api):
+        agency = api.envialia_agency
+        username = api.username
+        password = api.password
+        debug = api.debug
+        labels = []
+        with Picking(agency, username, password, debug) as shipment_api:
+            for shipment in shipments:
+                if not shipment.carrier_tracking_ref:
+                    logging.getLogger('carrier_send_shipment_envialia').error(
+                        'Shipment %s has not been sent by Envialia.'
+                        % (shipment.code))
+                    continue
+
+                data = {}
+                data['agency_origin'] = data['agency_cargo'] = agency
+                reference = shipment.carrier_tracking_ref
+
+                envialia = shipment_api.label(reference, data)
+                if not envialia:
+                    logging.getLogger('carrier_send_shipment_envialia').error(
+                        'Label for shipment %s is not available from Envialia.'
+                        % shipment.code)
+                    continue
+                labels.append(envialia)
+                cls.write(shipments, {'printed': True})
+        return labels

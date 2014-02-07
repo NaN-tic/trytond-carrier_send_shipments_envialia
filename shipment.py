@@ -1,10 +1,9 @@
-#This file is part carrier_send_shipments module for Tryton.
-#The COPYRIGHT file at the top level of this repository contains 
-#the full copyright notices and license terms.
+# This file is part of the carrier_send_shipments module for Tryton.
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
 from trytond.pool import PoolMeta
-from envialia.picking import *
+from envialia.picking import Picking
 from trytond.modules.carrier_send_shipments.tools import unaccent
-
 import logging
 
 __all__ = ['ShipmentOut']
@@ -40,10 +39,12 @@ class ShipmentOut:
                 data['company_code'] = customer
                 data['company_phone'] = api.phone
                 data['customer_name'] = shipment.customer.name
-                data['customer_contact_name'] = shipment.delivery_address.name \
-                        or shipment.customer.name
-                data['customer_street'] = unaccent(shipment.delivery_address.street)
-                data['customer_city'] = unaccent(shipment.delivery_address.city)
+                data['customer_contact_name'] = (shipment.delivery_address.name
+                    or shipment.customer.name)
+                data['customer_street'] = unaccent(
+                    shipment.delivery_address.street)
+                data['customer_city'] = unaccent(
+                    shipment.delivery_address.city)
                 data['customer_zip'] = shipment.delivery_address.zip
                 data['customer_phone'] = shipment.delivery_address.phone or ''
                 data['document'] = shipment.number_packages

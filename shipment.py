@@ -48,8 +48,9 @@ class ShipmentOut:
                 data['customer_zip'] = shipment.delivery_address.zip
                 data['customer_phone'] = shipment.delivery_address.phone or ''
                 data['document'] = shipment.number_packages
-                if shipment.cash_ondelivery:
-                    data['cash_ondelivery'] = shipment.cash_ondelivery
+                if shipment.carrier_cashondelivery:
+                    data['cash_ondelivery'] = shipment.carrier_cashondelivery
+                    data['total'] = shipment.carrier_cashondelivery_total
                 data['ref'] = shipment.code
                 data['notes'] = shipment.comment
 

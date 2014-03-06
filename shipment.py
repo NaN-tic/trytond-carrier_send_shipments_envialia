@@ -50,7 +50,7 @@ class ShipmentOut:
                 data['document'] = shipment.number_packages
                 if shipment.carrier_cashondelivery:
                     data['cash_ondelivery'] = shipment.carrier_cashondelivery
-                    data['total'] = shipment.carrier_cashondelivery_total
+                    data['total'] = str(self.get_carrier_price_total(shipment))
                 data['ref'] = shipment.code
                 data['notes'] = shipment.comment
 

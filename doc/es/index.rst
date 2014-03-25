@@ -1,5 +1,8 @@
-==========================================
-API de Envialia para el envio de albaranes
-==========================================
+====================================
+Stock. Envio de albaranes a Envialia
+====================================
 
-TODO
+Envío de albaranes/entregas a la empresa de mensajería Envialia.
+
+* Alta envío a Envialia
+* Recepción etiqueta para el paquete

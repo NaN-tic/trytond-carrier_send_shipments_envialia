@@ -4,7 +4,7 @@
 from trytond.pool import Pool, PoolMeta
 from trytond.transaction import Transaction
 from envialia.picking import Picking
-from trytond.modules.carrier_send_shipments.tools import unaccent
+from trytond.modules.carrier_send_shipments.tools import unaccent, unspaces
 from base64 import decodestring
 import logging
 import tempfile
@@ -65,7 +65,7 @@ class ShipmentOut:
                 data['customer_street'] = unaccent(shipment.delivery_address.street)
                 data['customer_city'] = unaccent(shipment.delivery_address.city)
                 data['customer_zip'] = shipment.delivery_address.zip
-                data['customer_phone'] = shipment.delivery_address.phone or ''
+                data['customer_phone'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
                     data['cash_ondelivery'] = shipment.carrier_cashondelivery

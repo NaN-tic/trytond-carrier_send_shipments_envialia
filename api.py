@@ -10,7 +10,7 @@ import logging
 try:
     from envialia.picking import *
 except ImportError:
-    message = 'Unable to import Envialia: pip install envialia'
+    message = 'Install Envialia from Pypi: pip install envialia'
     logging.getLogger('envialia').error(message)
     raise Exception(message)
 
@@ -19,7 +19,6 @@ __metaclass__ = PoolMeta
 
 
 class CarrierApi:
-    'Carrier API'
     __name__ = 'carrier.api'
     envialia_agency = fields.Char('Agency', states={
             'required': Eval('method') == 'envialia',

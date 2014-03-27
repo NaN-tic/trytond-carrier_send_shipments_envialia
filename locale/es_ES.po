@@ -10,6 +10,10 @@ msgctxt "help:carrier.api,envialia_agency:"
 msgid "Envialia Agency"
 msgstr "Agencia Envialia"
 
+msgctxt "view:carrier.api:"
+msgid "Envialia"
+msgstr "Envialia"
+
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"
 msgstr "Cerrar"

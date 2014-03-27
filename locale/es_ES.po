@@ -8,7 +8,7 @@ msgstr "Agencia"
 
 msgctxt "help:carrier.api,envialia_agency:"
 msgid "Envialia Agency"
-msgstr "Envialia Agencia"
+msgstr "Agencia Envialia"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"

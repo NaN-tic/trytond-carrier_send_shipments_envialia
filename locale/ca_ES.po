@@ -4,11 +4,11 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 
 msgctxt "field:carrier.api,envialia_agency:"
 msgid "Agency"
-msgstr "Agencia"
+msgstr "Agència"
 
 msgctxt "help:carrier.api,envialia_agency:"
 msgid "Envialia Agency"
-msgstr "Envialia Agencia"
+msgstr "Agència Envialia"
 
 msgctxt "wizard_button:carrier.send.shipments,result,end:"
 msgid "Close"

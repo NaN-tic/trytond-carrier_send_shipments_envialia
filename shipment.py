@@ -50,6 +50,13 @@ class ShipmentOut:
                 if packages == 0:
                     packages = 1
 
+                if shipment.carrier_cashondelivery_total:
+                    price_ondelivery = shipment.carrier_cashondelivery_total
+                elif shipment.carrier_sale_price_total:
+                    price_ondelivery = shipment.carrier_sale_price_total
+                else:
+                    price_ondelivery = shipment.total_amount
+
                 data = {}
                 data['agency_cargo'] = agency
                 data['agency_origin'] = customer
@@ -69,7 +76,7 @@ class ShipmentOut:
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
                     data['cash_ondelivery'] = shipment.carrier_cashondelivery
-                    data['total'] = str(shipment.get_carrier_price_total())
+                    data['total'] = str(price_ondelivery)
                 data['ref'] = shipment.code
                 data['notes'] = notes
 

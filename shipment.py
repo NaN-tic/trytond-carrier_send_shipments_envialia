@@ -75,6 +75,11 @@ class ShipmentOut:
                 data['customer_phone'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
+                    if not price_ondelivery:
+                        message = 'Shipment %s not have price and send ' \
+                                'cashondelivery' % (shipment.code)
+                        errors.append(message)
+                        continue
                     data['cash_ondelivery'] = str(price_ondelivery)
                 data['ref'] = shipment.code
                 data['notes'] = unaccent(notes)

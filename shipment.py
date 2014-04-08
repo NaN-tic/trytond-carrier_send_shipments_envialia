@@ -44,7 +44,7 @@ class ShipmentOut:
 
                 notes = ''
                 if shipment.carrier_notes:
-                    notes = CarrierApi.carrier_unaccent(shipment.carrier_notes)
+                    notes = shipment.carrier_notes
 
                 packages = shipment.number_packages
                 if packages == 0:
@@ -63,7 +63,7 @@ class ShipmentOut:
                 if not api.reference:
                     data['reference'] = shipment.code
                 data['service_code'] = str(service.code)
-                data['company_name'] = api.company.rec_name
+                data['company_name'] = unaccent(api.company.rec_name)
                 data['company_code'] = customer
                 data['company_phone'] = api.phone
                 data['customer_name'] = unaccent(shipment.customer.name)
@@ -75,9 +75,9 @@ class ShipmentOut:
                 data['customer_phone'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
-                    data['cash_ondelivery'] = str(self.get_carrier_price_total(shipment))
+                    data['cash_ondelivery'] = str(price_ondelivery)
                 data['ref'] = shipment.code
-                data['notes'] = notes
+                data['notes'] = unaccent(notes)
 
                 # Send shipment data to carrier
                 envialia = picking_api.create(data)

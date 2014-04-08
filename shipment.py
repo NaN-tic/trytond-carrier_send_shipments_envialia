@@ -75,8 +75,7 @@ class ShipmentOut:
                 data['customer_phone'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
-                    data['cash_ondelivery'] = shipment.carrier_cashondelivery
-                    data['total'] = str(price_ondelivery)
+                    data['cash_ondelivery'] = str(self.get_carrier_price_total(shipment))
                 data['ref'] = shipment.code
                 data['notes'] = notes
 

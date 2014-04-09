@@ -26,6 +26,7 @@ class ShipmentOut:
         '''
         pool = Pool()
         CarrierApi = pool.get('carrier.api')
+        ShipmentOut = pool.get('stock.shipment.out')
 
         references = []
         labels = []
@@ -50,13 +51,6 @@ class ShipmentOut:
                 if packages == 0:
                     packages = 1
 
-                if shipment.carrier_cashondelivery_total:
-                    price_ondelivery = shipment.carrier_cashondelivery_total
-                elif shipment.carrier_sale_price_total:
-                    price_ondelivery = shipment.carrier_sale_price_total
-                else:
-                    price_ondelivery = shipment.total_amount
-
                 data = {}
                 data['agency_cargo'] = agency
                 data['agency_origin'] = customer
@@ -72,9 +66,10 @@ class ShipmentOut:
                 data['customer_street'] = unaccent(shipment.delivery_address.street)
                 data['customer_city'] = unaccent(shipment.delivery_address.city)
                 data['customer_zip'] = shipment.delivery_address.zip
-                data['customer_phone'] = unspaces(shipment.delivery_address.phone or shipment.company.party.phone)
+                data['customer_phone'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
+                    price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price_ondelivery:
                         message = 'Shipment %s not have price and send ' \
                                 'cashondelivery' % (shipment.code)

@@ -78,6 +78,8 @@ class ShipmentOut:
                     data['cash_ondelivery'] = str(price_ondelivery)
                 data['ref'] = shipment.code
                 data['notes'] = unaccent(notes)
+                if api.weight and getattr(shipment, 'weight_func'):
+                    data['weight'] = str(shipment.weight_func)
 
                 # Send shipment data to carrier
                 envialia = picking_api.create(data)

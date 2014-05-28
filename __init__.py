@@ -13,5 +13,5 @@ def register():
         ShipmentOut,
         module='carrier_send_shipments_envialia', type_='model')
     Pool.register(
-        StockManifest,
+        CarrierManifest,
         module='carrier_send_shipments_seurvalencia', type_='wizard')

@@ -4,14 +4,19 @@
 from envialia import Picking
 from trytond.pool import PoolMeta
 
-__all__ = ['StockManifest']
+__all__ = ['CarrierManifest']
 __metaclass__ = PoolMeta
 
 
-class StockManifest:
-    __name__ = 'stock.manifest'
+class CarrierManifest:
+    __name__ = 'carrier.manifest'
+
+    @classmethod
+    def __setup__(cls):
+        super(CarrierManifest, cls).__setup__()
+        cls._error_messages.update({
+                'not_manifest': 'Not available Envialia manifest.',
+                })
 
     def get_manifest_envialia(self, api, from_date, to_date):
-        with Picking(api.envialia_agency, api.username, api.password,
-                api.debug) as picking_api:
-            return picking_api.list(from_date)
+        self.raise_user_error('not_manifest')

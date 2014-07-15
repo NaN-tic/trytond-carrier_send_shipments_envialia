@@ -93,8 +93,8 @@ class ShipmentOut:
                         'carrier_tracking_ref': reference,
                         'carrier_service': service,
                         'carrier_delivery': True,
-                        'send_date': shipment.send_date,
-                        'send_employee': shipment.send_employee,
+                        'carrier_send_date': ShipmentOut.get_carrier_date(),
+                        'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
                         })
                     logging.getLogger('envialia').info(
                         'Send shipment %s' % (shipment.code))

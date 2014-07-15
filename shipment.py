@@ -42,6 +42,10 @@ class ShipmentOut:
         with Picking(agency, customer, password, debug) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
+                if not service:
+                    message = 'Add services and default service in Envialia API'
+                    errors.append(message)
+                    continue
 
                 notes = ''
                 if shipment.carrier_notes:

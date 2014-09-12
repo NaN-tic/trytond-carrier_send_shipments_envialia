@@ -83,7 +83,10 @@ class ShipmentOut:
                 data['ref'] = shipment.code
                 data['notes'] = unaccent(notes)
                 if api.weight and hasattr(shipment, 'weight_func'):
-                    data['weight'] = str(shipment.weight_func)
+                    weight = str(shipment.weight_func)
+                    if weight == '0.0':
+                        weight = '1'
+                    data['weight'] = str(weight)
 
                 # Send shipment data to carrier
                 envialia = picking_api.create(data)

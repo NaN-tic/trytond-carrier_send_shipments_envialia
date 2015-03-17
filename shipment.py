@@ -43,8 +43,9 @@ class ShipmentOut:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
-                    message = 'Add services and default service in Envialia API'
+                    message = 'Add %s service or configure a default API Envialia service.' % (shipment.code)
                     errors.append(message)
+                    logging.getLogger('seur').error(message)
                     continue
 
                 notes = ''

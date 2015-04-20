@@ -14,4 +14,4 @@ def register():
         module='carrier_send_shipments_envialia', type_='model')
     Pool.register(
         CarrierManifest,
-        module='carrier_send_shipments_seurvalencia', type_='wizard')
+        module='carrier_send_shipments_envialia', type_='wizard')

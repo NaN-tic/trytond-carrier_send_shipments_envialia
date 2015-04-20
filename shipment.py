@@ -118,7 +118,7 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_envialia(cls, api, shipments):
+    def print_labels_envialia(self, api, shipments):
         agency = api.envialia_agency
         username = api.username
         password = api.password
@@ -153,6 +153,6 @@ class ShipmentOut:
                     'Generated tmp label %s' % (temp.name))
                 temp.close()
                 labels.append(temp.name)
-            cls.write(shipments, {'carrier_printed': True})
+            self.write(shipments, {'carrier_printed': True})
 
         return labels

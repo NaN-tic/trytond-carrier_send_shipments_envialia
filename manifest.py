@@ -15,7 +15,7 @@ class CarrierManifest:
     def __setup__(cls):
         super(CarrierManifest, cls).__setup__()
         cls._error_messages.update({
-                'not_envialia_manifest': 'Not available Envialia manifest.',
+                'not_envialia_manifest': 'Envialia Manifest service is not available.',
                 })
 
     def get_manifest_envialia(self, api, from_date, to_date):

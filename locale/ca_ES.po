@@ -2,6 +2,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "error:carrier.manifest:"
+msgid "Envialia Manifest service is not available."
+msgstr "No es troba disponible el servei manifest Envialia."
+
 msgctxt "field:carrier.api,envialia_agency:"
 msgid "Agency"
 msgstr "Agència"

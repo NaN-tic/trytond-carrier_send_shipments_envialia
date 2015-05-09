@@ -17,6 +17,17 @@ class ShipmentOut:
     __name__ = 'stock.shipment.out'
 
     @classmethod
+    def __setup__(cls):
+        super(ShipmentOut, cls).__setup__()
+        cls._error_messages.update({
+            'envialia_add_services': 'Select a service or default service in Envialia API',
+            'envialia_not_price': 'Shipment "%(name)s" not have price and send '
+                'cashondelivery',
+            'envialia_not_send': 'Not send shipment %(name)s',
+            'envialia_not_send_error': 'Not send shipment %(name)s. %(error)s',
+            })
+
+    @classmethod
     def send_envialia(self, api, shipments):
         '''
         Send shipments out to envialia
@@ -43,9 +54,9 @@ class ShipmentOut:
             for shipment in shipments:
                 service = shipment.carrier_service or default_service
                 if not service:
-                    message = 'Add %s service or configure a default API Envialia service.' % (shipment.code)
+                    message = self.raise_user_error('envialia_add_services', {},
+                        raise_exception=False)
                     errors.append(message)
-                    logging.getLogger('seur').error(message)
                     continue
 
                 notes = ''
@@ -76,8 +87,9 @@ class ShipmentOut:
                 if shipment.carrier_cashondelivery:
                     price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
                     if not price_ondelivery:
-                        message = 'Shipment %s not have price and send ' \
-                                'cashondelivery' % (shipment.code)
+                        message = self.raise_user_error('envialia_not_price', {
+                                'name': shipment.rec_name,
+                                }, raise_exception=False)
                         errors.append(message)
                         continue
                     data['cash_ondelivery'] = str(price_ondelivery)
@@ -109,9 +121,12 @@ class ShipmentOut:
                     references.append(shipment.code)
                 if envialia and envialia.get('error'):
                     error = envialia.get('error')
-                    logging.getLogger('envialia').error(
-                        'Not send shipment %s. %s' % (shipment.code, error))
-                    errors.append(shipment.code)
+                    message = self.raise_user_error('envialia_not_send_error', {
+                            'name': shipment.rec_name,
+                            'error': error,
+                            }, raise_exception=False)
+                    logging.getLogger('envialia').error(message)
+                    errors.append(message)
 
                 labels += self.print_labels_envialia(api, shipments)
 

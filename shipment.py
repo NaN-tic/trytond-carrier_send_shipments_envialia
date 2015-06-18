@@ -145,7 +145,7 @@ class ShipmentOut:
         with Picking(agency, username, password, debug) as shipment_api:
             for shipment in shipments:
                 if not shipment.carrier_tracking_ref:
-                    logging.getLogger('carrier_send_shipment_envialia').error(
+                    logging.getLogger('envialia').error(
                         'Shipment %s has not been sent by Envialia.'
                         % (shipment.code))
                     continue
@@ -156,7 +156,7 @@ class ShipmentOut:
 
                 label = shipment_api.label(reference, data)
                 if not label:
-                    logging.getLogger('carrier_send_shipment_envialia').error(
+                    logging.getLogger('envialia').error(
                         'Label for shipment %s is not available from Envialia.'
                         % shipment.code)
                     continue

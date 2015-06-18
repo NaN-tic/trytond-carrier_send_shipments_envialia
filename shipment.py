@@ -52,7 +52,7 @@ class ShipmentOut:
 
         with Picking(agency, customer, password, debug) as picking_api:
             for shipment in shipments:
-                service = shipment.carrier_service or default_service
+                service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
                     message = self.raise_user_error('envialia_add_services', {},
                         raise_exception=False)

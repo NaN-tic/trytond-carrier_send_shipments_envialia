@@ -12,6 +12,8 @@ import tempfile
 __all__ = ['ShipmentOut']
 __metaclass__ = PoolMeta
 
+logger = logging.getLogger(__name__)
+
 
 class ShipmentOut:
     __name__ = 'stock.shipment.out'
@@ -110,8 +112,7 @@ class ShipmentOut:
                 envialia = picking_api.create(data)
 
                 if not envialia:
-                    logging.getLogger('envialia').error(
-                        'Not send shipment %s.' % (shipment.code))
+                    logger.error('Not send shipment %s.' % (shipment.code))
                 if envialia and envialia.get('reference'):
                     reference = envialia.get('reference')
                     self.write([shipment], {
@@ -121,8 +122,7 @@ class ShipmentOut:
                         'carrier_send_date': ShipmentOut.get_carrier_date(),
                         'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
                         })
-                    logging.getLogger('envialia').info(
-                        'Send shipment %s' % (shipment.code))
+                    logger.info('Send shipment %s' % (shipment.code))
                     references.append(shipment.code)
                 if envialia and envialia.get('error'):
                     error = envialia.get('error')
@@ -130,7 +130,7 @@ class ShipmentOut:
                             'name': shipment.rec_name,
                             'error': error,
                             }, raise_exception=False)
-                    logging.getLogger('envialia').error(message)
+                    logger.error(message)
                     errors.append(message)
 
                 labels += self.print_labels_envialia(api, shipments)
@@ -150,7 +150,7 @@ class ShipmentOut:
         with Picking(agency, username, password, debug) as shipment_api:
             for shipment in shipments:
                 if not shipment.carrier_tracking_ref:
-                    logging.getLogger('envialia').error(
+                    logger.error(
                         'Shipment %s has not been sent by Envialia.'
                         % (shipment.code))
                     continue
@@ -161,7 +161,7 @@ class ShipmentOut:
 
                 label = shipment_api.label(reference, data)
                 if not label:
-                    logging.getLogger('envialia').error(
+                    logger.error(
                         'Label for shipment %s is not available from Envialia.'
                         % shipment.code)
                     continue
@@ -169,7 +169,7 @@ class ShipmentOut:
                         prefix='%s-envialia-%s-' % (dbname, reference),
                         suffix='.pdf', delete=False) as temp:
                     temp.write(decodestring(label)) # Envialia PDF file
-                logging.getLogger('envialia').info(
+                logger.info(
                     'Generated tmp label %s' % (temp.name))
                 temp.close()
                 labels.append(temp.name)

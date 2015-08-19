@@ -3,7 +3,7 @@
 The COPYRIGHT file at the top level of this repository contains the full copyright notices and license terms. -->
 <data>
     <xpath expr="/form/notebook/page[@id='api']" position="after">
-        <page string="Envialia" id="envialia" states="{'invisible': Not(Equal(Eval('method'), 'envialia'))}">
+        <page string="Envialia" id="envialia">
             <label name="envialia_agency"/>
             <field name="envialia_agency"/>
         </page>

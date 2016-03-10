@@ -156,7 +156,7 @@ class ShipmentOut:
         debug = api.debug
 
         labels = []
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         with Picking(agency, username, password, debug) as shipment_api:
             for shipment in shipments:

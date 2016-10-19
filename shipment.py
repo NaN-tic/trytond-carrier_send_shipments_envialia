@@ -123,17 +123,16 @@ class ShipmentOut:
                 # Send shipment data to carrier
                 envialia = picking_api.create(data)
 
+                vals2write = {}
                 if not envialia:
                     logger.error('Not send shipment %s.' % (shipment.code))
                 if envialia and envialia.get('reference'):
                     reference = envialia.get('reference')
-                    self.write([shipment], {
-                        'carrier_tracking_ref': reference,
-                        'carrier_service': service,
-                        'carrier_delivery': True,
-                        'carrier_send_date': ShipmentOut.get_carrier_date(),
-                        'carrier_send_employee': ShipmentOut.get_carrier_employee() or None,
-                        })
+                    vals2write['carrier_tracking_ref'] = reference
+                    vals2write['carrier_service'] = service
+                    vals2write['carrier_delivery'] = True
+                    vals2write['carrier_send_date'] = ShipmentOut.get_carrier_date()
+                    vals2write['carrier_send_employee'] = ShipmentOut.get_carrier_employee() or None
                     logger.info('Send shipment %s' % (shipment.code))
                     references.append(shipment.code)
                 if envialia and envialia.get('error'):
@@ -146,6 +145,11 @@ class ShipmentOut:
                     errors.append(message)
 
                 labels += self.print_labels_envialia(api, shipments)
+                if labels:
+                    vals2write['carrier_printed'] = True
+
+                if vals2write:
+                    self.write([shipment], vals2write)
 
         return references, labels, errors
 

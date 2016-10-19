@@ -50,11 +50,12 @@ class ShipmentOut:
         agency = api.envialia_agency
         customer = api.username
         password = api.password
+        timeout = api.timeout
         debug = api.debug
 
         default_service = CarrierApi.get_default_carrier_service(api)
 
-        with Picking(agency, customer, password, debug) as picking_api:
+        with Picking(agency, customer, password, timeout=timeout, debug=debug) as picking_api:
             for shipment in shipments:
                 service = shipment.carrier_service or shipment.carrier.service or default_service
                 if not service:
@@ -153,12 +154,13 @@ class ShipmentOut:
         agency = api.envialia_agency
         username = api.username
         password = api.password
+        timeout = api.timeout
         debug = api.debug
 
         labels = []
         dbname = Transaction().cursor.dbname
 
-        with Picking(agency, username, password, debug) as shipment_api:
+        with Picking(agency, username, password, timeout=timeout, debug=debug) as shipment_api:
             for shipment in shipments:
                 if not shipment.carrier_tracking_ref:
                     logger.error(

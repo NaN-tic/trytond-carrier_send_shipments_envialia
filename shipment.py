@@ -10,12 +10,12 @@ import logging
 import tempfile
 
 __all__ = ['ShipmentOut']
-__metaclass__ = PoolMeta
 
 logger = logging.getLogger(__name__)
 
 
 class ShipmentOut:
+    __metaclass__ = PoolMeta
     __name__ = 'stock.shipment.out'
 
     @classmethod
@@ -162,7 +162,7 @@ class ShipmentOut:
         debug = api.debug
 
         labels = []
-        dbname = Transaction().cursor.dbname
+        dbname = Transaction().database.name
 
         with Picking(agency, username, password, timeout=timeout, debug=debug) as shipment_api:
             for shipment in shipments:

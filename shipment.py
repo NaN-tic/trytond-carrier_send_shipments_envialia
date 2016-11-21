@@ -144,7 +144,7 @@ class ShipmentOut:
                     logger.error(message)
                     errors.append(message)
 
-                labels += self.print_labels_envialia(api, shipments)
+                labels += self.print_labels_envialia(api, [shipment], reference=reference)
                 if labels:
                     vals2write['carrier_printed'] = True
 
@@ -154,7 +154,7 @@ class ShipmentOut:
         return references, labels, errors
 
     @classmethod
-    def print_labels_envialia(self, api, shipments):
+    def print_labels_envialia(self, api, shipments, reference=None):
         agency = api.envialia_agency
         username = api.username
         password = api.password
@@ -166,15 +166,16 @@ class ShipmentOut:
 
         with Picking(agency, username, password, timeout=timeout, debug=debug) as shipment_api:
             for shipment in shipments:
-                if not shipment.carrier_tracking_ref:
-                    logger.error(
-                        'Shipment %s has not been sent by Envialia.'
-                        % (shipment.code))
-                    continue
+                if not reference:
+                    if not shipment.carrier_tracking_ref:
+                        logger.error(
+                            'Shipment %s has not been sent by Envialia.'
+                            % (shipment.code))
+                        continue
+                    reference = shipment.carrier_tracking_ref
 
                 data = {}
                 data['agency_origin'] = data['agency_cargo'] = agency
-                reference = shipment.carrier_tracking_ref
 
                 label = shipment_api.label(reference, data)
                 if not label:

@@ -126,8 +126,8 @@ class ShipmentOut:
                 vals2write = {}
                 if not envialia:
                     logger.error('Not send shipment %s.' % (shipment.code))
-                if envialia and envialia.get('reference'):
-                    reference = envialia.get('reference')
+                reference = envialia.get('reference')
+                if envialia and reference:
                     vals2write['carrier_tracking_ref'] = reference
                     vals2write['carrier_service'] = service
                     vals2write['carrier_delivery'] = True
@@ -144,7 +144,8 @@ class ShipmentOut:
                     logger.error(message)
                     errors.append(message)
 
-                labels += self.print_labels_envialia(api, [shipment], reference=reference)
+                if reference:
+                    labels += self.print_labels_envialia(api, [shipment], reference=reference)
                 if labels:
                     vals2write['carrier_printed'] = True
 

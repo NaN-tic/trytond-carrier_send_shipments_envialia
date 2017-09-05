@@ -82,7 +82,7 @@ class ShipmentOut:
                 data['agency_origin'] = customer
                 if not api.reference:
                     data['reference'] = code
-                data['picking_date'] = Date.today()
+                data['picking_date'] = Date.today().strftime("%Y-%m-%d")
                 data['service_code'] = str(service.code)
                 data['company_name'] = unaccent(api.company.rec_name)
                 data['company_code'] = customer

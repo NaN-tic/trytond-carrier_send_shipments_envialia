@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -17,10 +17,6 @@ msgstr "No s'ha enviat l'albarà %(name)s. %(error)s."
 msgctxt "error:stock.shipment.out:"
 msgid "Select a service or default service in Envialia API"
 msgstr "Selecciona un servei o un servei per defecte a la API d'Envialia."
-
-msgctxt "error:stock.shipment.out:"
-msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
-msgstr "L'albarà \"%(name)s\" no disposa de preus i es contrarembolsament."
 
 msgctxt "field:carrier.api,envialia_agency:"
 msgid "Agency"

@@ -23,8 +23,6 @@ class ShipmentOut:
         super(ShipmentOut, cls).__setup__()
         cls._error_messages.update({
             'envialia_add_services': 'Select a service or default service in Envialia API',
-            'envialia_not_price': 'Shipment "%(name)s" not have price and send '
-                'cashondelivery',
             'envialia_not_send': 'Not send shipment %(name)s',
             'envialia_not_send_error': 'Not send shipment %(name)s. %(error)s',
             })
@@ -96,13 +94,7 @@ class ShipmentOut:
                 data['customer_phone'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
-                    price_ondelivery = ShipmentOut.get_price_ondelivery_shipment_out(shipment)
-                    if not price_ondelivery:
-                        message = self.raise_user_error('envialia_not_price', {
-                                'name': shipment.rec_name,
-                                }, raise_exception=False)
-                        errors.append(message)
-                        continue
+                    price_ondelivery = shipment.carrier_cashondelivery_price
                     data['cash_ondelivery'] = str(price_ondelivery)
                 data['ref'] = code
                 data['notes'] = unaccent(notes)

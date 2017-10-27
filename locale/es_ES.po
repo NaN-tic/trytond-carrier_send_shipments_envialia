@@ -1,4 +1,4 @@
-# 
+#
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
@@ -18,10 +18,6 @@ msgctxt "error:stock.shipment.out:"
 msgid "Select a service or default service in Envialia API"
 msgstr ""
 "Seleccione un servicio o un servicio por defecto en la API de Envialia."
-
-msgctxt "error:stock.shipment.out:"
-msgid "Shipment \"%(name)s\" not have price and send cashondelivery"
-msgstr "El albarán \"%(name)s\" no dispone de precio y contrarembolso."
 
 msgctxt "field:carrier.api,envialia_agency:"
 msgid "Agency"

@@ -91,7 +91,8 @@ class ShipmentOut:
                 data['customer_street'] = unaccent(shipment.delivery_address.street)
                 data['customer_city'] = unaccent(shipment.delivery_address.city)
                 data['customer_zip'] = shipment.delivery_address.zip
-                data['customer_phone'] = unspaces(ShipmentOut.get_phone_shipment_out(shipment))
+                data['customer_phone'] = unspaces(shipment.mobile or shipment.phone)
+                data['customer_email'] = unspaces(shipment.email)
                 data['document'] = packages
                 if shipment.carrier_cashondelivery:
                     price_ondelivery = shipment.carrier_cashondelivery_price

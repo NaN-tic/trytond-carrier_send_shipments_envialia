@@ -114,6 +114,7 @@ class ShipmentOut:
                     data['weight'] = str(weight)
 
                 # Send shipment data to carrier
+                logger.info('Send ENVIALIA API data: %s' % data)
                 envialia = picking_api.create(data)
 
                 vals2write = {}
